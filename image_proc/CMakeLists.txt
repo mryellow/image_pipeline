@@ -3,12 +3,16 @@ project(image_proc)
 
 find_package(catkin REQUIRED)
 
-find_package(catkin REQUIRED cv_bridge dynamic_reconfigure image_geometry image_transport nodelet roscpp sensor_msgs)
+find_package(catkin REQUIRED cv_bridge dynamic_reconfigure image_geometry image_transport nodelet nodelet_topic_tools roscpp sensor_msgs)
 find_package(OpenCV REQUIRED)
 find_package(Boost REQUIRED COMPONENTS thread)
 
+if(cv_bridge_VERSION VERSION_GREATER "1.12.0")
+  add_compile_options(-std=c++11)
+endif()
+
 # Dynamic reconfigure support
-generate_dynamic_reconfigure_options(cfg/CropDecimate.cfg cfg/Debayer.cfg cfg/Rectify.cfg)
+generate_dynamic_reconfigure_options(cfg/CropDecimate.cfg cfg/Debayer.cfg cfg/Rectify.cfg cfg/Resize.cfg)
 
 catkin_package(
   CATKIN_DEPENDS image_geometry roscpp sensor_msgs
@@ -17,13 +21,17 @@ catkin_package(
   LIBRARIES ${PROJECT_NAME}
 )
 
-include_directories(SYSTEM ${catkin_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS})
-include_directories(include)
+include_directories(include ${catkin_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS})
+
+# Temporary fix for DataType deprecation in OpenCV 3.3.1. We continue to use the deprecated form for now because
+# the new one is not available in OpenCV 2.4 (on Trusty).
+add_definitions(-DOPENCV_TRAITS_ENABLE_DEPRECATED)
 
 # Nodelet library
 add_library(${PROJECT_NAME} src/libimage_proc/processor.cpp
                                 src/nodelets/debayer.cpp
                                 src/nodelets/rectify.cpp
+                                src/nodelets/resize.cpp
                                 src/nodelets/crop_decimate.cpp
                                 src/libimage_proc/advertisement_checker.cpp
                                 src/nodelets/edge_aware.cpp

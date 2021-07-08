@@ -1,3 +1,47 @@
+1.12.23 (2018-05-10)
+--------------------
+* camera_checker: Ensure cols + rows are in correct order (`#319 <https://github.com/ros-perception/image_pipeline/issues/319>`_)
+  Without this commit, specifying a smaller column than row size lead to
+  huge reported errors:
+  ```
+  $ rosrun camera_calibration cameracheck.py --size 6x7 --square 0.0495
+  Linearity RMS Error: 13.545 Pixels      Reprojection RMS Error: 22.766 Pixels
+  $ rosrun camera_calibration cameracheck.py --size 7x6 --square 0.0495
+  Linearity RMS Error: 0.092 Pixels      Reprojection RMS Error: 0.083 Pixels
+  ```
+  This commit switches columns and rows around if necessary.
+* Contributors: Martin Günther
+
+1.12.22 (2017-12-08)
+--------------------
+* Changed flags CV_LOAD_IMAGE_COLOR by IMREAD_COLOR to adapt to Opencv3. (`#252 <https://github.com/ros-perception/image_pipeline/issues/252>`_)
+* Fixed stereo calibration problem with chessboard with the same number of rows and cols by rotating the corners to same direction.
+* Contributors: jbosch
+
+1.12.21 (2017-11-05)
+--------------------
+* re-add the calibration nodes but now using the Python modules.
+  Fixes `#298 <https://github.com/ros-perception/image_pipeline/issues/298>`_
+* Move nodes to Python module.
+* Contributors: Vincent Rabaud
+
+1.12.20 (2017-04-30)
+--------------------
+* properly save bytes buffer as such
+  This is useful for Python 3 and fixes `#256 <https://github.com/ros-perception/image_pipeline/issues/256>`_.
+* Get tests slightly looser.
+  OpenCV 3.2 gives slightly different results apparently.
+* Use floor division where necessary. (`#247 <https://github.com/ros-perception/image_pipeline/issues/247>`_)
+* Fix and Improve Camera Calibration Checker Node (`#254 <https://github.com/ros-perception/image_pipeline/issues/254>`_)
+  * Fix according to calibrator.py API
+  * Add approximate to cameracheck
+* Force first corner off chessboard to be uppler left.
+  Fixes `#140 <https://github.com/ros-perception/image_pipeline/issues/140>`_
+* fix doc jobs
+  This is a proper fix for `#233 <https://github.com/ros-perception/image_pipeline/issues/233>`_
+* During stereo calibration check that the number of corners detected in the left and right images are the same. This fixes `ros-perception/image_pipeline#225 <https://github.com/ros-perception/image_pipeline/issues/225>`_
+* Contributors: Leonard Gerard, Martin Peris, Vincent Rabaud, hgaiser
+
 1.12.19 (2016-07-24)
 --------------------
 * Fix array check in camerachecky.py

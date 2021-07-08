@@ -1,3 +1,47 @@
+1.12.23 (2018-05-10)
+--------------------
+
+1.12.22 (2017-12-08)
+--------------------
+* Merge pull request `#311 <https://github.com/ros-perception/image_pipeline/issues/311>`_ from knorth55/revert-299
+  Revert "Fix image_resize nodelet (`#299 <https://github.com/ros-perception/image_pipeline/issues/299>`_)"
+  This reverts commit 32e19697ebce47101b063c6a02b95dfa2c5dbc52.
+* Contributors: Shingo Kitagawa, Tully Foote
+
+1.12.21 (2017-11-05)
+--------------------
+* Fix image_resize nodelet (`#299 <https://github.com/ros-perception/image_pipeline/issues/299>`_)
+  Update interpolation types
+  Add arguments to enable disable each nodelet
+  Add default arguments for image_resize and image_rect
+  Use toCVShare instead of toCVCopy
+  Include image_resize in image_proc
+* Updated fix for traits change. (`#303 <https://github.com/ros-perception/image_pipeline/issues/303>`_)
+* Fix C++11 compilation
+  This fixes `#292 <https://github.com/ros-perception/image_pipeline/issues/292>`_ and `#291 <https://github.com/ros-perception/image_pipeline/issues/291>`_
+* [image_proc][crop_decimate] support changing target image frame_id (`#276 <https://github.com/ros-perception/image_pipeline/issues/276>`_)
+* Contributors: Furushchev, Mike Purvis, Vincent Rabaud, bikramak
+
+1.12.20 (2017-04-30)
+--------------------
+* Add nodelet to resize image and camera_info (`#273 <https://github.com/ros-perception/image_pipeline/issues/273>`_)
+  * Add nodelet to resize image and camera_info
+  * Depends on nodelet_topic_tools
+  * Use recursive_mutex for mutex guard for dynamic reconfiguring
+* Fix nodelet name: crop_nonZero ->  crop_non_zero (`#269 <https://github.com/ros-perception/image_pipeline/issues/269>`_)
+  Fix https://github.com/ros-perception/image_pipeline/issues/217
+* Fix permission of executable files unexpectedly (`#260 <https://github.com/ros-perception/image_pipeline/issues/260>`_)
+* address gcc6 build error
+  With gcc6, compiling fails with `stdlib.h: No such file or directory`,
+  as including '-isystem /usr/include' breaks with gcc6, cf.,
+  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=70129.
+  This commit addresses this issue for this package in the same way
+  it was addressed in various other ROS packages. A list of related
+  commits and pull requests is at:
+  https://github.com/ros/rosdistro/issues/12783
+  Signed-off-by: Lukas Bulwahn <lukas.bulwahn@oss.bmw-carit.de>
+* Contributors: Kentaro Wada, Lukas Bulwahn
+
 1.12.19 (2016-07-24)
 --------------------
 
